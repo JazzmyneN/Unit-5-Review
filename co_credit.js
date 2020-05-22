@@ -7,8 +7,8 @@
 
    Credit Card Form Script
    
-   Author: 
-   Date:   
+   Author: Jazzmyne Nixon
+   Date: 5/21/2020  
    
    Filename: co_credit.js
    
@@ -47,13 +47,48 @@
 
 
 
+window.addEventListener("load", function(){
+   var orderData = decodeURI((window.location.search).substring(1).split('+').join(' '));
 
+   var orderFields = orderData.split("&");
+   orderFields = (orderFields.toString()).split("=");
 
+   document.getElementById("modelName").value = orderFields[3];
+   document.getElementById("modelQty").value = orderFields[5];
+   document.getElementById("orderCost").value = orderFields[7];
+   document.getElementById("shippingType").value = orderFields[9];
+   document.getElementById("shippingCost").value = orderFields[13];
+   document.getElementById("subTotal").value = orderFields[15];
+   document.getElementById("salesTax").value = orderFields[17];
+   document.getElementById("cartTotal").value = orderFields[19];
 
+});
 
+window.addEventListener("load", function(){
+   document.getElementById("subButton").addEventListener("click", runSubmit());
+   document.getElementById("cardHolder").addEventListener("input", validateName());
+   document.getElementById("cardNumber").addEventListener("input", validateNumber())
+   document.getElementById("expDate").addEventListener("input", validateDate())
+   document.getElementById("cvc").addEventListener("input", validateCVC())
+})
 
-
-
+function runSubmit() {
+   validateName()
+   validateNumber()
+   validateCredit()
+   validateDate()
+   validateCVC()
+}
+function validateDate() {
+   var regex = RegExp("/^(0[1;9]|1[0-2])\/20[12]\d$/");
+   if(document.getElementById("expDate")=== "") {
+      document.getElementById("expDate").setCustomValidity("Enter the expiration date.")
+   } else if ((regex.test(document.getElementById("expDate")) === false)) {
+      document.getElementById("expDate").setCustomValidity("Enter a valid expiration date.")
+   } else {
+      document.getElementById("expDate").setCustomValidity("")
+   }
+}
 
 /* Functions already provided in the file */
 
